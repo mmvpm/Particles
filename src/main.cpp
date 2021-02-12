@@ -5,10 +5,10 @@
 
 int main() {
     auto config = GravitySceneConfig();
-    config.particles_number = 50000;
+    config.particles_number = 30000;
 
-    auto scene = GravityScene(config);
-//    auto scene = GravitySceneLines(config);
+//    auto scene = GravityScene(config);
+    auto scene = GravitySceneLines(config);
 //    auto scene = GravitySceneNeonLines(config);
 
     scene.run();

@@ -23,6 +23,8 @@ GravityScene::GravityScene(int width, int height, GravityModel model) :
 void GravityScene::run() {
     RenderWindow window(VideoMode(width, height), title);
 
+    model.set_delta_time(4);
+
     bool left_mouse_button_pressed = false;
     while (window.isOpen()) {
         Event event {};
@@ -45,7 +47,7 @@ void GravityScene::run() {
             model.get_center().position = point_from_scene(Point(mouse_position.x, mouse_position.y));
         }
 
-        std::vector<Particle> particles = model.get_particles();
+        const std::vector<Particle> &particles = model.get_particles();
 
         Vertex center[] = {get_center(model.get_center())};
         window.draw(center, 1, Points);
@@ -53,7 +55,7 @@ void GravityScene::run() {
         std::vector<Vertex> points;
         PrimitiveType points_type;
         std::tie(points, points_type) = get_vertices(particles);
-        window.draw(&points[0], points.size(), points_type);
+        window.draw(points.data(), points.size(), points_type);
 
         window.display();
         sleep(frame_delay);

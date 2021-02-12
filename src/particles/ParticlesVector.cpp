@@ -8,7 +8,7 @@ ParticlesVector::ParticlesVector(int particlesNumber, const Particle& defaultPar
     data = std::vector<Particle> (particlesNumber, defaultParticle);
 }
 
-std::vector<Particle> ParticlesVector::get_particles() const {
+const std::vector<Particle>& ParticlesVector::get_particles() const {
     return data;
 }
 

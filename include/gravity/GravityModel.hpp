@@ -8,6 +8,8 @@ private:
     Particle center;
     ParticlesVector particles;
 
+    int delta_time = 1;
+
 private:
     const double G = 5e4;
     const double max_F = 10;
@@ -18,8 +20,11 @@ private:
 public:
     GravityModel(const Particle& center, int particles_number, const Particle& defaultParticle);
 
+    int get_delta_time() const;
+    void set_delta_time(int new_value);
+
     Particle& get_center(); // not const
-    std::vector<Particle> get_particles() const;
+    const std::vector<Particle>& get_particles() const;
 
     void update() override;
 

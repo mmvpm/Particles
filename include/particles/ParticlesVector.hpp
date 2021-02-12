@@ -15,7 +15,7 @@ public:
     explicit ParticlesVector(std::vector<Particle> data);
     ParticlesVector(int particlesNumber, const Particle& defaultParticle);
 
-    std::vector<Particle> get_particles() const;
+    const std::vector<Particle>& get_particles() const;
 
     void update_with(const std::function<void(Particle&)>& function);
 };
