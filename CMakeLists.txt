@@ -5,22 +5,29 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(include)
 
 add_executable(Particles
-        include/interfaces/IModel.hpp
-        include/interfaces/IScene.hpp
-        include/particles/Point.hpp
-        include/particles/Particle.hpp
-        include/particles/ParticlesVector.hpp
-        include/gravity/GravityModel.hpp
-        include/gravity/GravityScene.hpp
-        include/gravity/GravitySceneLines.hpp
-        include/gravity/GravitySceneNeonLines.hpp
-        src/particles/Point.cpp
-        src/particles/ParticlesVector.cpp
-        src/gravity/GravityModel.cpp
-        src/gravity/GravityScene.cpp
-        src/gravity/GravitySceneLines.cpp
-        src/gravity/GravitySceneNeonLines.cpp
-        src/main.cpp)
+    include/interfaces/IModel.hpp
+    include/interfaces/IScene.hpp
+
+    include/particles/Point.hpp
+    include/particles/Particle.hpp
+    include/particles/ParticlesVector.hpp
+
+    include/gravity/GravityModel.hpp
+    include/gravity/GravityScene.hpp
+    include/gravity/GravitySceneLines.hpp
+    include/gravity/GravitySceneNeonLines.hpp
+    include/gravity/GravitySceneConfig.hpp
+
+    src/particles/Point.cpp
+    src/particles/ParticlesVector.cpp
+
+    src/gravity/GravityModel.cpp
+    src/gravity/GravityScene.cpp
+    src/gravity/GravitySceneLines.cpp
+    src/gravity/GravitySceneNeonLines.cpp
+
+    src/main.cpp
+)
 
 set(SFML_ROOT C:/cpp_sfml_test/SFML)
 set(SFML_STATIC_LIBRARIES TRUE)

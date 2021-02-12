@@ -1,11 +1,24 @@
 #include "gravity/GravityScene.hpp"
 
-#include <iostream>
-
 using namespace sf;
 
-GravityScene::GravityScene(int width, int height, GravityModel model)
-    : width(width), height(height), model(std::move(model)) {}
+GravityScene::GravityScene(const GravitySceneConfig& config) :
+    width(config.screen_width),
+    height(config.screen_height),
+    model(
+        std::move(GravityModel(
+            config.center,
+            config.particles_number,
+            config.default_particle
+        ))
+    ),
+    center_color(config.center_color),
+    particle_color(config.particle_color),
+    title(config.scene_name),
+    frame_delay(config.frame_delay) {}
+
+GravityScene::GravityScene(int width, int height, GravityModel model) :
+    width(width), height(height), model(std::move(model)) {}
 
 void GravityScene::run() {
     RenderWindow window(VideoMode(width, height), title);

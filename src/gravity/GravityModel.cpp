@@ -1,7 +1,7 @@
 #include "gravity/GravityModel.hpp"
 
-GravityModel::GravityModel(const Particle& center, int particlesNumber, const Particle& defaultParticle)
-    : center(center), particles(particlesNumber, defaultParticle) {}
+GravityModel::GravityModel(const Particle& center, int particles_number, const Particle& defaultParticle)
+    : center(center), particles(particles_number, defaultParticle) {}
 
 Particle& GravityModel::get_center() {
     return center;
@@ -20,7 +20,7 @@ void GravityModel::update()  {
             particle.direction += F_direction;
 
             // допплнительная обработка для большей реалистичности
-            if (particle.direction.norm2() <= quantum_radius && particle.direction.norm2() > radius2) {
+            if (particle.direction.norm2() <= radius_shrink && particle.direction.norm2() > radius2) {
                 particle.direction = std::sqrt(radius2) * particle.direction.normalize();
             }
         }

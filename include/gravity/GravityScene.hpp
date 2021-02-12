@@ -1,28 +1,23 @@
 #pragma once
 
-#include <cstring>
 #include <SFML/Graphics.hpp>
 
-#include "interfaces/IScene.hpp"
 #include "GravityModel.hpp"
+#include "interfaces/IScene.hpp"
+#include "GravitySceneConfig.hpp"
 
 class GravityScene : public IScene {
 protected:
     int width, height;
     GravityModel model;
 
-private:
+protected:
     sf::Color center_color = sf::Color::White;
     sf::Color particle_color = sf::Color::Red;
 
 protected:
-    const std::string title = "GravityScene";
-    const sf::Time frame_delay = sf::milliseconds(10);
-
-public:
-    GravityScene(int width, int height, GravityModel model);
-
-    void run() override;
+    std::string title = "GravityScene";
+    sf::Time frame_delay = sf::milliseconds(10);
 
 protected:
     Point point_from_model(const Point &point) const;
@@ -32,4 +27,10 @@ protected:
 
     virtual sf::Vertex get_center(const Particle& center);
     virtual vertices_with_type get_vertices(const std::vector<Particle> &particles);
+
+public:
+    GravityScene(int width, int height, GravityModel model);
+    GravityScene(const GravitySceneConfig& config);
+
+    void run() override;
 };

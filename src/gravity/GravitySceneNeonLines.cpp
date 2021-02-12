@@ -2,8 +2,7 @@
 
 using namespace sf;
 
-GravitySceneNeonLines::GravitySceneNeonLines(int width, int height, GravityModel model)
-    : GravitySceneLines(width, height, model) {
+void GravitySceneNeonLines::allocate_field() {
     // быстрое выделение двумерного массива
     field = new int* [width];
     field[0] = new int[width * height];
@@ -12,11 +11,22 @@ GravitySceneNeonLines::GravitySceneNeonLines(int width, int height, GravityModel
     }
 }
 
-GravityScene::vertices_with_type GravitySceneNeonLines::get_vertices(const std::vector<Particle> &particles) {
+void GravitySceneNeonLines::clear_field() {
     // очищаем массив от результатов предыдущих запусков функции
     memset(field[0], 0, width * height * sizeof(int));
+}
 
-    // алгоритм Брезенхема
+GravitySceneNeonLines::GravitySceneNeonLines(const GravitySceneConfig& config) :
+    GravitySceneLines(config) {
+    allocate_field();
+}
+
+GravitySceneNeonLines::GravitySceneNeonLines(int width, int height, GravityModel model) :
+    GravitySceneLines(width, height, model) {
+    allocate_field();
+}
+
+void GravitySceneNeonLines::bresenham_algorithm(const std::vector<Particle>& particles) {
     for (auto& particle : particles) {
         Point pos = point_from_model(particle.position);
         // рисуем половину от particle.direction
@@ -54,10 +64,15 @@ GravityScene::vertices_with_type GravitySceneNeonLines::get_vertices(const std::
             error_y -= (int) error_y;
         }
     }
+}
 
+GravityScene::vertices_with_type GravitySceneNeonLines::get_vertices(const std::vector<Particle> &particles) {
     auto sigmoid = [](double x) -> double {
         return 1 / (1 + std::pow(M_E, -x)); // in [-1, 1]
     };
+
+    clear_field();
+    bresenham_algorithm(particles);
 
     std::vector<Vertex> vertices;
     for (int x = 0; x < width; ++x) {
@@ -68,7 +83,7 @@ GravityScene::vertices_with_type GravitySceneNeonLines::get_vertices(const std::
                 double saturation = 1 - sigmoid(color_estimation); // HSV-saturation
 
                 // уменьшение насыщенности в формате HSV (цвет становится более белым)
-                Color color = line_color;
+                Color color = particle_color;
                 int max_component = std::max(std::max(color.r, color.g), color.b);
                 color.r += (1 - saturation) * (max_component - color.r);
                 color.g += (1 - saturation) * (max_component - color.g);
@@ -80,5 +95,3 @@ GravityScene::vertices_with_type GravitySceneNeonLines::get_vertices(const std::
     }
     return {vertices, Points};
 }
-
-
