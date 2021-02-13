@@ -5,6 +5,7 @@
 
 int main() {
     auto config = GravitySceneConfig();
+    config.screen_width = 1600;
     config.particles_number = 30000;
 
 //    auto scene = GravityScene(config);

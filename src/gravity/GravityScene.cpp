@@ -22,9 +22,14 @@ GravityScene::GravityScene(int width, int height, GravityModel model) :
 
 void GravityScene::run() {
     RenderWindow window(VideoMode(width, height), title);
+    SeekBar seek_bar(seek_bar_size, seek_bar_position);
 
-    model.set_delta_time(1);
+    auto get_mouse_position = [&]() -> Point {
+        Vector2i pos = Mouse::getPosition(window);
+        return Point(pos.x, pos.y);
+    };
 
+    bool pressed_on_slider = false;
     bool left_mouse_button_pressed = false;
     while (window.isOpen()) {
         Event event {};
@@ -35,16 +40,27 @@ void GravityScene::run() {
             if ((int) event.key.code == (int) Mouse::Left) {
                 if (event.type == Event::MouseButtonPressed) {
                     left_mouse_button_pressed = true;
+                    if (seek_bar.is_on_slider(get_mouse_position())) {
+                        pressed_on_slider = true;
+                    }
                 }
                 if (event.type == Event::MouseButtonReleased) {
+                    pressed_on_slider = false;
                     left_mouse_button_pressed = false;
                 }
             }
         }
-        // center follows the mouse
-        if (left_mouse_button_pressed) {
-            Vector2i mouse_position = Mouse::getPosition(window);
-            model.get_center().position = point_from_scene(Point(mouse_position.x, mouse_position.y));
+        // центр тяжести следует за мышкой пользователя
+        if (left_mouse_button_pressed && !pressed_on_slider) {
+            model.get_center().position = point_from_scene(get_mouse_position());
+        }
+        // обновляем состояние ползунка
+        if (pressed_on_slider) {
+            seek_bar.set_position(get_mouse_position());
+            model.set_delta_time(seek_bar.get_value());
+        }
+        for (const auto& shape : seek_bar.get_shapes()) {
+            window.draw(shape);
         }
 
         const std::vector<Particle>& particles = model.get_particles();

@@ -4,6 +4,7 @@
 
 #include "GravityModel.hpp"
 #include "interfaces/IScene.hpp"
+#include "ui_objects/SeekBar.hpp"
 #include "GravitySceneConfig.hpp"
 
 class GravityScene : public IScene {
@@ -18,6 +19,13 @@ protected:
 protected:
     std::string title = "GravityScene";
     sf::Time frame_delay = sf::milliseconds(10);
+
+protected:
+    int seek_bar_size = 100;
+    Point seek_bar_position = Point(
+        width / 2,
+        height - 100
+    );
 
 protected:
     Point point_from_model(const Point& point) const;
