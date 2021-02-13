@@ -3,7 +3,7 @@
 #include <cmath>
 #include <utility>
 
-const double precision = 1e-6;
+const double precision = 1e-9;
 
 struct Point {
     double x, y;

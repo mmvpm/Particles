@@ -8,9 +8,11 @@ private:
     Particle center;
     ParticlesVector particles;
 
-    int delta_time = 1;
+    double delta_time   = 1; // delta_time < 1 - замедление
+    double current_time = 0; // накапливает прошедшее время
 
 private:
+    // << магические константы >>
     const double G = 5e4;
     const double max_F = 10;
     const double friction = 0.96;
@@ -20,8 +22,8 @@ private:
 public:
     GravityModel(const Particle& center, int particles_number, const Particle& defaultParticle);
 
-    int get_delta_time() const;
-    void set_delta_time(int new_value);
+    double get_delta_time() const;
+    void set_delta_time(double new_value);
 
     Particle& get_center(); // not const
     const std::vector<Particle>& get_particles() const;

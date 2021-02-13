@@ -23,7 +23,7 @@ GravityScene::GravityScene(int width, int height, GravityModel model) :
 void GravityScene::run() {
     RenderWindow window(VideoMode(width, height), title);
 
-    model.set_delta_time(4);
+    model.set_delta_time(1);
 
     bool left_mouse_button_pressed = false;
     while (window.isOpen()) {

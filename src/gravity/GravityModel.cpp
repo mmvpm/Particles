@@ -1,50 +1,59 @@
-#include <iostream>
 #include "gravity/GravityModel.hpp"
 
-GravityModel::GravityModel(const Particle& center, int particles_number, const Particle& defaultParticle)
+GravityModel::GravityModel(const Particle &center, int particles_number, const Particle &defaultParticle)
     : center(center), particles(particles_number, defaultParticle) {}
 
-Particle& GravityModel::get_center() {
+Particle &GravityModel::get_center() {
     return center;
 }
 
-const std::vector<Particle>& GravityModel::get_particles() const {
+const std::vector<Particle> &GravityModel::get_particles() const {
     return particles.get_particles();
 }
 
-void GravityModel::update()  {
-    particles.update_with([&](Particle& particle) {
-        if (particle.current_time >= delta_time) {
-            if (!particle.position.equal(center.position)) {
-                double radius2 = particle.position.distance2(center.position); // r^2
-                double F = std::fmin(max_F, G * center.mass / radius2); // F = G * m / r^2
-                Point F_direction = F * (center.position - particle.position).normalize();
-                particle.direction += F_direction;
+void GravityModel::update() {
+    particles.update_with([&](Particle &particle) {
 
-                // дополнительная обработка для большей реалистичности
-                if (particle.direction.norm2() <= radius_shrink && particle.direction.norm2() > radius2) {
-                    particle.direction = std::sqrt(radius2) * particle.direction.normalize();
-                }
+        if (!particle.position.equal(center.position)) {
+            double radius2 = particle.position.distance2(center.position); // r^2
+            double F = std::fmin(max_F, G * center.mass / radius2); // F = G * m / r^2
+            Point F_direction = delta_time * F * (center.position - particle.position).normalize();
+            particle.direction += F_direction;
+
+            // дополнительная обработка для большей реалистичности
+            if (particle.direction.norm2() <= radius_shrink && particle.direction.norm2() > radius2) {
+                particle.direction = std::sqrt(radius2) * particle.direction.normalize();
             }
-
-            apply_shift(particle.direction);
-            particle.current_time = 0;
-            particle.start_position = particle.position;
         }
-        particle.current_time += 1;
-        particle.position = particle.start_position + ((double) particle.current_time / delta_time) * particle.direction;
+
+        // смещение происходит не каждый раз (при delta_time < 1)
+        if (current_time >= 1) {
+            apply_shift(particle.direction);
+        }
+        particle.position += delta_time * particle.direction;
     });
+
+    if (current_time >= 1) {
+        current_time = 0;
+    }
+    current_time += delta_time;
 }
 
-int GravityModel::get_delta_time() const {
+double GravityModel::get_delta_time() const {
     return delta_time;
 }
 
-void GravityModel::set_delta_time(int new_value) {
-    delta_time = new_value >= 0 ? new_value : delta_time;
+void GravityModel::set_delta_time(double new_value) {
+    if (new_value > 1) {
+        // для (1.0 <= 1)
+        new_value -= precision;
+    }
+    if (0 <= new_value && new_value <= 1) {
+        delta_time = new_value;
+    }
 }
 
-void GravityModel::apply_shift(Point& direction) const {
+void GravityModel::apply_shift(Point &direction) const {
     auto random_double = [&]() -> double {
         return max_random_shift * rand() / RAND_MAX;
     };
