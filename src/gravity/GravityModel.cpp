@@ -1,18 +1,18 @@
 #include "gravity/GravityModel.hpp"
 
-GravityModel::GravityModel(const Particle &center, int particles_number, const Particle &defaultParticle)
+GravityModel::GravityModel(const Particle& center, int particles_number, const Particle& defaultParticle)
     : center(center), particles(particles_number, defaultParticle) {}
 
-Particle &GravityModel::get_center() {
+Particle& GravityModel::get_center() {
     return center;
 }
 
-const std::vector<Particle> &GravityModel::get_particles() const {
+const std::vector<Particle>& GravityModel::get_particles() const {
     return particles.get_particles();
 }
 
 void GravityModel::update() {
-    particles.update_with([&](Particle &particle) {
+    particles.update_with([&](Particle& particle) {
 
         if (!particle.position.equal(center.position)) {
             double radius2 = particle.position.distance2(center.position); // r^2
@@ -53,7 +53,7 @@ void GravityModel::set_delta_time(double new_value) {
     }
 }
 
-void GravityModel::apply_shift(Point &direction) const {
+void GravityModel::apply_shift(Point& direction) const {
     auto random_double = [&]() -> double {
         return max_random_shift * rand() / RAND_MAX;
     };

@@ -66,7 +66,7 @@ void GravitySceneNeonLines::bresenham_algorithm(const std::vector<Particle>& par
     }
 }
 
-GravityScene::vertices_with_type GravitySceneNeonLines::get_vertices(const std::vector<Particle> &particles) {
+GravityScene::vertices_with_type GravitySceneNeonLines::get_vertices(const std::vector<Particle>& particles) {
     auto sigmoid = [](double x) -> double {
         return 1 / (1 + std::pow(M_E, -x)); // in [-1, 1]
     };

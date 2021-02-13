@@ -20,13 +20,13 @@ protected:
     sf::Time frame_delay = sf::milliseconds(10);
 
 protected:
-    Point point_from_model(const Point &point) const;
-    Point point_from_scene(const Point &point) const;
+    Point point_from_model(const Point& point) const;
+    Point point_from_scene(const Point& point) const;
 
     using vertices_with_type = std::pair<std::vector<sf::Vertex>, sf::PrimitiveType>;
 
     virtual sf::Vertex get_center(const Particle& center);
-    virtual vertices_with_type get_vertices(const std::vector<Particle> &particles);
+    virtual vertices_with_type get_vertices(const std::vector<Particle>& particles);
 
 public:
     GravityScene(int width, int height, GravityModel model);

@@ -47,7 +47,7 @@ void GravityScene::run() {
             model.get_center().position = point_from_scene(Point(mouse_position.x, mouse_position.y));
         }
 
-        const std::vector<Particle> &particles = model.get_particles();
+        const std::vector<Particle>& particles = model.get_particles();
 
         Vertex center[] = {get_center(model.get_center())};
         window.draw(center, 1, Points);
