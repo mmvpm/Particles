@@ -22,7 +22,8 @@ add_executable(Particles
     include/gravity/GravitySceneNeonLines.hpp
     include/gravity/GravitySceneConfig.hpp
 
-    include/ui_objects/SeekBar.hpp
+    include/helper_objects/SeekBar.hpp
+    include/helper_objects/Gradient.hpp
 
     src/particles/Point.cpp
     src/particles/ParticlesVector.cpp
@@ -32,7 +33,8 @@ add_executable(Particles
     src/gravity/GravitySceneLines.cpp
     src/gravity/GravitySceneNeonLines.cpp
 
-    src/ui_objects/SeekBar.cpp
+    src/helper_objects/SeekBar.cpp
+    src/helper_objects/Gradient.cpp
 )
 
 target_link_libraries(Particles sfml-graphics)

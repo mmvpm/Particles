@@ -6,11 +6,13 @@
 int main() {
     auto config = GravitySceneConfig();
     config.screen_width = 1600;
-    config.particles_number = 30000;
+    config.screen_height = 900;
+    config.particles_number = 50000;
 
-//    auto scene = GravityScene(config);
-    auto scene = GravitySceneLines(config);
-//    auto scene = GravitySceneNeonLines(config);
+
+    GravityScene scene(config);
+//    GravitySceneLines scene(config);
+//    GravitySceneNeonLines scene(config);
 
     scene.run();
 

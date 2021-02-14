@@ -4,6 +4,10 @@ ParticlesVector::ParticlesVector() : data(std::vector<Particle>(0)) {}
 
 ParticlesVector::ParticlesVector(std::vector<Particle> data) : data(std::move(data)) {}
 
+int ParticlesVector::particles_number() const {
+    return data.size();
+}
+
 ParticlesVector::ParticlesVector(int particlesNumber, const Particle& defaultParticle) {
     data = std::vector<Particle> (particlesNumber, defaultParticle);
 }

@@ -23,6 +23,11 @@ struct GravitySceneConfig {
         {27,   0},
         1
     };
-    sf::Color center_color   = {255, 255, 255};
-    sf::Color particle_color = {255,   0,   0};
+    sf::Color center_color = sf::Color::White;
+    std::vector<sf::Color> particle_colors = {
+        sf::Color::Red,
+        sf::Color::Blue,
+        sf::Color::Green,
+        sf::Color::Yellow
+    };
 };

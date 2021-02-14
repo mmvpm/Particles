@@ -83,7 +83,7 @@ GravityScene::vertices_with_type GravitySceneNeonLines::get_vertices(const std::
                 double saturation = 1 - sigmoid(color_estimation); // HSV-saturation
 
                 // уменьшение насыщенности в формате HSV (цвет становится более белым)
-                Color color = particle_color;
+                Color color = gradient.get_color();
                 int max_component = std::max(std::max(color.r, color.g), color.b);
                 color.r += (1 - saturation) * (max_component - color.r);
                 color.g += (1 - saturation) * (max_component - color.g);

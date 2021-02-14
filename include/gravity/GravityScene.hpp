@@ -4,8 +4,9 @@
 
 #include "GravityModel.hpp"
 #include "interfaces/IScene.hpp"
-#include "ui_objects/SeekBar.hpp"
 #include "GravitySceneConfig.hpp"
+#include "helper_objects/SeekBar.hpp"
+#include "helper_objects/Gradient.hpp"
 
 class GravityScene : public IScene {
 protected:
@@ -13,18 +14,17 @@ protected:
     GravityModel model;
 
 protected:
+    Gradient gradient = Gradient({sf::Color::Red});
     sf::Color center_color = sf::Color::White;
-    sf::Color particle_color = sf::Color::Red;
 
 protected:
     std::string title = "GravityScene";
     sf::Time frame_delay = sf::milliseconds(10);
 
 protected:
-    int seek_bar_size = 100;
-    Point seek_bar_position = Point(
-        width / 2,
-        height - 100
+    SeekBar seek_bar = SeekBar(
+        100,
+        Point(width / 2,height - 100)
     );
 
 protected:

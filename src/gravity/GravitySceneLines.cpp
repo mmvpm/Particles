@@ -17,12 +17,12 @@ GravityScene::vertices_with_type GravitySceneLines::get_vertices(const std::vect
         Point last = first + 0.5 * particle.direction;
         lines.emplace_back(
             Vector2f(first.x, first.y),
-            particle_color,
+            gradient.get_color(),
             Vector2f(1, 1)
         );
         lines.emplace_back(
             Vector2f(last.x, last.y),
-            particle_color,
+            gradient.get_color(),
             Vector2f(1, 1)
         );
     }

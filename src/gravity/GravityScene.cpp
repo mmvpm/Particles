@@ -13,16 +13,15 @@ GravityScene::GravityScene(const GravitySceneConfig& config) :
         ))
     ),
     center_color(config.center_color),
-    particle_color(config.particle_color),
     title(config.scene_name),
-    frame_delay(config.frame_delay) {}
+    frame_delay(config.frame_delay),
+    gradient(config.particle_colors) {}
 
 GravityScene::GravityScene(int width, int height, GravityModel model) :
     width(width), height(height), model(std::move(model)) {}
 
 void GravityScene::run() {
     RenderWindow window(VideoMode(width, height), title);
-    SeekBar seek_bar(seek_bar_size, seek_bar_position);
 
     auto get_mouse_position = [&]() -> Point {
         Vector2i pos = Mouse::getPosition(window);
@@ -31,6 +30,7 @@ void GravityScene::run() {
 
     bool pressed_on_slider = false;
     bool left_mouse_button_pressed = false;
+
     while (window.isOpen()) {
         Event event {};
         while (window.pollEvent(event)) {
@@ -54,20 +54,23 @@ void GravityScene::run() {
         if (left_mouse_button_pressed && !pressed_on_slider) {
             model.get_center().position = point_from_scene(get_mouse_position());
         }
-        // обновляем состояние ползунка
+        // обновление состояния ползунка
         if (pressed_on_slider) {
             seek_bar.set_position(get_mouse_position());
             model.set_delta_time(seek_bar.get_value());
         }
+        // отрисовка seek_bar
         for (const auto& shape : seek_bar.get_shapes()) {
             window.draw(shape);
         }
 
         const std::vector<Particle>& particles = model.get_particles();
 
+        // отрисовка центра масс
         Vertex center[] = {get_center(model.get_center())};
         window.draw(center, 1, Points);
 
+        // отрисовка частиц
         std::vector<Vertex> points;
         PrimitiveType points_type;
         std::tie(points, points_type) = get_vertices(particles);
@@ -75,9 +78,10 @@ void GravityScene::run() {
 
         window.display();
         sleep(frame_delay);
+        window.clear();
 
         model.update();
-        window.clear();
+        gradient.update_color();
     }
 }
 
@@ -97,7 +101,7 @@ Vertex GravityScene::get_center(const Particle& center) {
 GravityScene::vertices_with_type GravityScene::get_vertices(const std::vector<Particle>& particles) {
     auto particle_to_vertex = [&](const Particle& particle) -> Vertex {
         Point pos = point_from_model(particle.position);
-        return {Vector2f(pos.x, pos.y), particle_color, Vector2f(1, 1)};
+        return {Vector2f(pos.x, pos.y), gradient.get_color(), Vector2f(1, 1)};
     };
     std::vector<Vertex> vertices;
     std::transform(particles.begin(), particles.end(), std::back_inserter(vertices), particle_to_vertex);
