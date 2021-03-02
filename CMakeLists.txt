@@ -7,8 +7,6 @@ include_directories(include)
 find_package(SFML 2.5.1 COMPONENTS graphics REQUIRED)
 
 add_executable(Particles
-    src/main.cpp
-
     include/interfaces/IModel.hpp
     include/interfaces/IScene.hpp
 
@@ -22,8 +20,8 @@ add_executable(Particles
     include/gravity/GravitySceneNeonLines.hpp
     include/gravity/GravitySceneConfig.hpp
 
-    include/helper_objects/SeekBar.hpp
-    include/helper_objects/Gradient.hpp
+    include/extensions/SeekBar.hpp
+    include/extensions/Gradient.hpp
 
     src/particles/Point.cpp
     src/particles/ParticlesVector.cpp
@@ -33,8 +31,10 @@ add_executable(Particles
     src/gravity/GravitySceneLines.cpp
     src/gravity/GravitySceneNeonLines.cpp
 
-    src/helper_objects/SeekBar.cpp
-    src/helper_objects/Gradient.cpp
+    src/extensions/SeekBar.cpp
+    src/extensions/Gradient.cpp
+
+    src/main.cpp
 )
 
 target_link_libraries(Particles sfml-graphics)

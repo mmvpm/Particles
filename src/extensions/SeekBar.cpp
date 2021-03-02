@@ -1,4 +1,4 @@
-#include "helper_objects/SeekBar.hpp"
+#include "extensions/SeekBar.hpp"
 
 using namespace sf;
 

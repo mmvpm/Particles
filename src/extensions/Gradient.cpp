@@ -1,4 +1,4 @@
-#include "helper_objects/Gradient.hpp"
+#include "extensions/Gradient.hpp"
 
 Gradient::MyColor::MyColor(double r, double g, double b) :
     r(r), g(g), b(b) {}

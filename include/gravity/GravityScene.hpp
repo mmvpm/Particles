@@ -5,8 +5,8 @@
 #include "GravityModel.hpp"
 #include "interfaces/IScene.hpp"
 #include "GravitySceneConfig.hpp"
-#include "helper_objects/SeekBar.hpp"
-#include "helper_objects/Gradient.hpp"
+#include "extensions/SeekBar.hpp"
+#include "extensions/Gradient.hpp"
 
 class GravityScene : public IScene {
 protected:
