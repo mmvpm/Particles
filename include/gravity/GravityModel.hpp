@@ -8,11 +8,11 @@ private:
     Particle center;
     ParticlesVector particles;
 
-    double delta_time   = 1; // delta_time < 1 - замедление
-    double current_time = 0; // накапливает прошедшее время
+    double delta_time   = 1; // delta_time < 1 - slowing down
+    double current_time = 0; // accumulates the current time
 
 private:
-    // << магические константы >>
+    // "magic constants"
     const double G = 5e4;
     const double max_F = 10;
     const double friction = 0.96;
@@ -25,7 +25,7 @@ public:
     double get_delta_time() const;
     void set_delta_time(double new_value);
 
-    Particle& get_center(); // not const
+    Particle& get_center();
     const std::vector<Particle>& get_particles() const;
 
     void update() override;

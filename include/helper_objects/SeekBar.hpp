@@ -8,12 +8,12 @@
 class SeekBar {
 private:
     int radius;
-    Point center_position; // центр слайдера
-    Point current_position; // позиция ползунка
-    double value = 1; // in [0, 1] - величина сдвига
+    Point center_position; // SeekBar center
+    Point current_position; // position of the slider
+    double value = 1; // in [0, 1] - shift value
 
 private:
-    const int hit_box = 20; // радиус столкновения
+    const int hit_box = 20; // radius of the collision
 
 private:
     sf::Color bottom_line_color = sf::Color(255, 255, 255, 70);

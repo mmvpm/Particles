@@ -12,7 +12,7 @@ GravityScene::vertices_with_type GravitySceneLines::get_vertices(const std::vect
     std::vector<Vertex> lines;
     for (auto& particle : particles) {
         Point pos = point_from_model(particle.position);
-        // рисуем половину от particle.direction
+        // half of the particle.direction
         Point first = pos - 0.25 * particle.direction;
         Point last = first + 0.5 * particle.direction;
         lines.emplace_back(

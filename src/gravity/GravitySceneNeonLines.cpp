@@ -3,7 +3,7 @@
 using namespace sf;
 
 void GravitySceneNeonLines::allocate_field() {
-    // быстрое выделение двумерного массива
+    // fast allocation of 2d-array
     field = new int* [width];
     field[0] = new int[width * height];
     for (int i = 1; i < width; i++) {
@@ -12,7 +12,7 @@ void GravitySceneNeonLines::allocate_field() {
 }
 
 void GravitySceneNeonLines::clear_field() {
-    // очищаем массив от результатов предыдущих запусков функции
+    // clearing the array from the results of previous function runs
     memset(field[0], 0, width * height * sizeof(int));
 }
 
@@ -29,11 +29,11 @@ GravitySceneNeonLines::GravitySceneNeonLines(int width, int height, GravityModel
 void GravitySceneNeonLines::bresenham_algorithm(const std::vector<Particle>& particles) {
     for (auto& particle : particles) {
         Point pos = point_from_model(particle.position);
-        // рисуем половину от particle.direction
+        // half of the particle.direction
         Point first = pos - 0.25 * particle.direction;
         Point last = first + 0.5 * particle.direction;
 
-        // написано без ОО-подхода ради производительности
+        // not ООP for better performance
         int delta_x = last.x - first.x;
         int delta_y = last.y - first.y;
         int distance = std::max(std::abs(delta_x), std::abs(delta_y));
@@ -82,7 +82,7 @@ GravityScene::vertices_with_type GravitySceneNeonLines::get_vertices(const std::
                 int color_estimation = std::min(white_bound,  field[x][y]) - white_bound / 2;
                 double saturation = 1 - sigmoid(color_estimation); // HSV-saturation
 
-                // уменьшение насыщенности в формате HSV (цвет становится более белым)
+                // reducing the saturation in HSV format (the color becomes more white)
                 Color color = gradient.get_color();
                 int max_component = std::max(std::max(color.r, color.g), color.b);
                 color.r += (1 - saturation) * (max_component - color.r);

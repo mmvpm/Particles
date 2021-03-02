@@ -8,6 +8,7 @@ protected:
     int** field;
 
 protected:
+    // "magic constant"
     const int white_bound = 10;
 
 private:

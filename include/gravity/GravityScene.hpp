@@ -14,7 +14,7 @@ protected:
     GravityModel model;
 
 protected:
-    Gradient gradient = Gradient({sf::Color::Red});
+    Gradient gradient = Gradient({ sf::Color::Red });
     sf::Color center_color = sf::Color::White;
 
 protected:

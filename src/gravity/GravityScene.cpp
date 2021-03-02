@@ -50,27 +50,27 @@ void GravityScene::run() {
                 }
             }
         }
-        // центр тяжести следует за мышкой пользователя
+        // center of mass follows the user's mouse
         if (left_mouse_button_pressed && !pressed_on_slider) {
             model.get_center().position = point_from_scene(get_mouse_position());
         }
-        // обновление состояния ползунка
+        // updating state of the slider
         if (pressed_on_slider) {
             seek_bar.set_position(get_mouse_position());
             model.set_delta_time(seek_bar.get_value());
         }
-        // отрисовка seek_bar
+        // seek_bar rendering
         for (const auto& shape : seek_bar.get_shapes()) {
             window.draw(shape);
         }
 
         const std::vector<Particle>& particles = model.get_particles();
 
-        // отрисовка центра масс
+        // center of mass rendering
         Vertex center[] = {get_center(model.get_center())};
         window.draw(center, 1, Points);
 
-        // отрисовка частиц
+        // particles rendering
         std::vector<Vertex> points;
         PrimitiveType points_type;
         std::tie(points, points_type) = get_vertices(particles);

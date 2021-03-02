@@ -20,13 +20,13 @@ void GravityModel::update() {
             Point F_direction = delta_time * F * (center.position - particle.position).normalize();
             particle.direction += F_direction;
 
-            // дополнительная обработка для большей реалистичности
+            // additional processing to make the simulation more realistic
             if (particle.direction.norm2() <= radius_shrink && particle.direction.norm2() > radius2) {
                 particle.direction = std::sqrt(radius2) * particle.direction.normalize();
             }
         }
 
-        // смещение происходит не каждый раз (при delta_time < 1)
+        // offset doesn't happen every time (when delta_time < 1)
         if (current_time >= 1) {
             apply_shift(particle.direction);
         }
@@ -45,7 +45,7 @@ double GravityModel::get_delta_time() const {
 
 void GravityModel::set_delta_time(double new_value) {
     if (new_value > 1) {
-        // для (1.0 <= 1)
+        // for (1.0 <= 1)
         new_value -= precision;
     }
     if (0 <= new_value && new_value <= 1) {

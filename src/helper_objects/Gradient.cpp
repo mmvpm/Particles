@@ -32,13 +32,16 @@ Gradient::MyColor operator*(double k, const Gradient::MyColor& color) {
 }
 
 Gradient::Gradient(const std::vector<sf::Color>& sf_colors) {
-    std::transform(sf_colors.begin(), sf_colors.end(), std::back_inserter(colors), from_sf_color);
+    std::transform(sf_colors.begin(), sf_colors.end(),
+        std::back_inserter(colors), from_sf_color
+    );
 }
 
 void Gradient::update_color() {
     current_time += 1;
     if (current_time == one_step_time) {
         current_time = 0;
+        // moving through the loop
         current_index = (current_index + 1) % colors.size();
     }
 }
